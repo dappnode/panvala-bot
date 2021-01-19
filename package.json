@@ -27,7 +27,7 @@
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "google-spreadsheet": "^3.1.15",
-    "googleapis": "^67.0.0",
+    "googleapis": "^39.2.0",
     "json-schema-to-typescript": "^10.1.3"
   }
 }

@@ -1,8 +1,11 @@
+import { Endpoints } from "@octokit/types";
+
 export interface PanvalaUser {
   discord: string;
   id: string;
   grain: string;
   address: string;
+  time: string;
 }
 
 export interface ActionIdentity {
@@ -62,3 +65,5 @@ export interface ActionDistribution {
   uuid: string; // "bSPLDEka9GI9BIPidyn6qQ"
   version: string; //"1"
 }
+
+export type ContentResponse = Endpoints["GET /repos/{owner}/{repo}/contents/{path}"]["response"];
