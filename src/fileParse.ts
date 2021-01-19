@@ -1,4 +1,4 @@
-import { readFile } from "fs";
+import { readFile } from "./fileCreation";
 import { ActionIdentity, PanvalaUser, Receipt } from "./types";
 import { instanceOfIdentity } from "./utils";
 
@@ -32,4 +32,7 @@ export function getId(discord: string): string | null {
   );
   if (userCreation) return userCreation.action.identity.id;
   return null;
+}
+function getReceipts(): Receipt[][] {
+  throw new Error("Function not implemented.");
 }

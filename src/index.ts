@@ -1,5 +1,5 @@
 import Discord from "discord.js";
-import { addPanvalaUser } from "./google-sheets";
+import { addPanvalaUser, createSheet } from "./google-sheets";
 import { discordToken } from "./params";
 
 const client = new Discord.Client();
@@ -13,9 +13,20 @@ client.on("ready", () => {
 client.on("message", async (msg) => {
   try {
     const args = msg.content.split(" ");
-    if (args[0] === "!claim") {
-      addPanvalaUser({ discord: msg.author.username, address: args[1] });
-    } else if (msg.content === "$new$month$") {
+    if (args[0] === "!claim" && args.length === 2) {
+      const response = await addPanvalaUser({
+        discord: msg.author.username,
+        address: args[1],
+      });
+      msg.reply(response);
+    } else if (
+      (args[0] === "!new" &&
+        args.length === 2 &&
+        msg.author.username === "pablomendez_95") ||
+      "eduadiez (DAppNode)"
+    ) {
+      const response = await createSheet(args[1]);
+      msg.reply(response);
     } else if (msg.content === "panvala") {
     } else {
       return 1;

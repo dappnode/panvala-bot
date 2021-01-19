@@ -5,7 +5,10 @@ import {
 } from "google-spreadsheet";
 import { createPanvalaUser } from "./panvalaUser";
 import { clientSecretJson, googleID } from "./params";
-import { google } from "googleapis";
+
+const keys = require("./keys.json");
+
+let sheetTitle = "February";
 
 export const doc = new GoogleSpreadsheet(googleID);
 if (!doc) {
@@ -20,8 +23,8 @@ export async function readInfo() {
   return await doc.loadInfo(); // Loads sheets
 }
 
-function getSheet() {
-  return doc.sheetsByIndex[0];
+export function getSheet() {
+  return doc.sheetsByTitle[sheetTitle];
 }
 
 export async function addPanvalaUser({
@@ -30,21 +33,34 @@ export async function addPanvalaUser({
 }: {
   discord: string;
   address: string;
-}) {
+}): Promise<string> {
   const sheet = getSheet();
   const panvalaUser = createPanvalaUser({ discord, address });
-  await sheet.addRow({
-    Discord: panvalaUser.discord,
-    Id: panvalaUser.id,
-    Grain: panvalaUser.grain,
-    Address: panvalaUser.address,
-    Time: panvalaUser.time,
-  });
+  try {
+    await sheet.addRow({
+      Discord: panvalaUser.discord,
+      Id: panvalaUser.id,
+      Grain: panvalaUser.grain,
+      Address: panvalaUser.address,
+      Time: panvalaUser.time,
+    });
+    return "Successfully added";
+  } catch (e) {
+    e.message = `Error adding panvala user ${panvalaUser}`;
+    throw e;
+  }
 }
 
-export async function getChecks() {
-  await accessSpreadsheet();
-  await readInfo();
-  const sheet = doc.sheetsByIndex[0];
-  return await sheet.getRows();
+export async function createSheet(title: string): Promise<string> {
+  try {
+    await doc.addSheet({
+      headerValues: ["Discord", "Id", "Address", "Date", "Grain"],
+      title: title,
+    });
+    sheetTitle = title;
+    return "Successfully created sheet";
+  } catch (e) {
+    e.message = `Error creating sheet: ${title}`;
+    throw e;
+  }
 }
