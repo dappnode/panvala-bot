@@ -1,18 +1,19 @@
 import Discord from "discord.js";
-import { create } from "domain";
-import { GoogleSpreadsheetRow } from "google-spreadsheet";
+import { addPanvalaUser, changeSheet, createSheet } from "./google-sheets";
+import { discordToken } from "./params";
+import cron from "node-cron";
 import { getFile } from "./fileCreation";
-import { getGrain, getId } from "./fileParse";
-import {
-  addPanvalaUser,
-  changeSheet,
-  createSheet,
-  doc,
-  getSheet,
-  loadSheets,
-} from "./google-sheets";
-import { clientSecretJson, discordToken } from "./params";
-import { GoogleSpreadsheetRowResponse } from "./types";
+
+/**
+ * Rewrites the file after the grain distribution
+ */
+cron.schedule(
+  "6 0 * * 0",
+  async () => {
+    await getFile();
+  },
+  { timezone: "Europe/Madrid" }
+);
 
 const client = new Discord.Client();
 client.login(discordToken);

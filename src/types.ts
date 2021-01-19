@@ -70,35 +70,4 @@ export interface ActionDistribution {
   version: string; //"1"
 }
 
-export interface GoogleSpreadsheetRowResponse {
-  _sheet: {
-    _spreadsheet: {
-      spreadsheetId: "1RUeuRjfL120ufX1LQrAVq0-ISY31iPqiMBRkZekOXoI";
-      authMode: "JWT";
-      _rawSheets: [Object];
-      _rawProperties: [Object];
-      axios: [Function];
-      jwtClient: [any];
-    };
-    _rawProperties: {
-      sheetId: number;
-      title: string;
-      index: number;
-      sheetType: string;
-      gridProperties: [Object];
-    };
-    _cells: [];
-    _rowMetadata: [];
-    _columnMetadata: [];
-    headerValues: ["Discord", "Id", "Address", "Date", "Grain"];
-  };
-  _rowNumber: number;
-  _rawData: string[];
-  Discord: [];
-  Id: [];
-  Address: [];
-  Date: [];
-  Grain: [];
-}
-
 export type ContentResponse = Endpoints["GET /repos/{owner}/{repo}/contents/{path}"]["response"];
