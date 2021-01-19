@@ -1,6 +1,18 @@
 import Discord from "discord.js";
-import { addPanvalaUser, createSheet } from "./google-sheets";
-import { discordToken } from "./params";
+import { create } from "domain";
+import { GoogleSpreadsheetRow } from "google-spreadsheet";
+import { getFile } from "./fileCreation";
+import { getGrain, getId } from "./fileParse";
+import {
+  addPanvalaUser,
+  changeSheet,
+  createSheet,
+  doc,
+  getSheet,
+  loadSheets,
+} from "./google-sheets";
+import { clientSecretJson, discordToken } from "./params";
+import { GoogleSpreadsheetRowResponse } from "./types";
 
 const client = new Discord.Client();
 client.login(discordToken);
@@ -20,12 +32,22 @@ client.on("message", async (msg) => {
       });
       msg.reply(response);
     } else if (
-      (args[0] === "!new" &&
+      (args[0] === "!newSheet" &&
         args.length === 2 &&
         msg.author.username === "pablomendez_95") ||
-      "eduadiez (DAppNode)"
+      "eduadiez (DAppNode)" ||
+      "lanski"
     ) {
       const response = await createSheet(args[1]);
+      msg.reply(response);
+    } else if (
+      (args[0] === "!changeSheet" &&
+        args.length === 2 &&
+        msg.author.username === "pablomendez_95") ||
+      "eduadiez (DAppNode)" ||
+      "lanski"
+    ) {
+      const response = await changeSheet(args[1]);
       msg.reply(response);
     } else if (msg.content === "panvala") {
     } else {

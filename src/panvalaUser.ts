@@ -13,8 +13,8 @@ export function createPanvalaUser({
 
   if (id) {
     // User exists
-    const grain = getGrain(id);
     const time = getDate();
+    const grain = getGrain(id);
     return {
       id: id,
       address: address,

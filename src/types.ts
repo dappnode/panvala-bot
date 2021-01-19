@@ -1,4 +1,8 @@
 import { Endpoints } from "@octokit/types";
+import {
+  GoogleSpreadsheet,
+  GoogleSpreadsheetWorksheet,
+} from "google-spreadsheet";
 
 export interface PanvalaUser {
   discord: string;
@@ -64,6 +68,37 @@ export interface ActionDistribution {
   ledgerTimestamp: number; // 1607979812883
   uuid: string; // "bSPLDEka9GI9BIPidyn6qQ"
   version: string; //"1"
+}
+
+export interface GoogleSpreadsheetRowResponse {
+  _sheet: {
+    _spreadsheet: {
+      spreadsheetId: "1RUeuRjfL120ufX1LQrAVq0-ISY31iPqiMBRkZekOXoI";
+      authMode: "JWT";
+      _rawSheets: [Object];
+      _rawProperties: [Object];
+      axios: [Function];
+      jwtClient: [any];
+    };
+    _rawProperties: {
+      sheetId: number;
+      title: string;
+      index: number;
+      sheetType: string;
+      gridProperties: [Object];
+    };
+    _cells: [];
+    _rowMetadata: [];
+    _columnMetadata: [];
+    headerValues: ["Discord", "Id", "Address", "Date", "Grain"];
+  };
+  _rowNumber: number;
+  _rawData: string[];
+  Discord: [];
+  Id: [];
+  Address: [];
+  Date: [];
+  Grain: [];
 }
 
 export type ContentResponse = Endpoints["GET /repos/{owner}/{repo}/contents/{path}"]["response"];
