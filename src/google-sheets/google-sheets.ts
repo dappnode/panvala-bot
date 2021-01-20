@@ -16,7 +16,7 @@ if (!doc) {
  */
 export async function loadSheets() {
   await doc.useServiceAccountAuth(clientSecretJson);
-  await doc.loadInfo(); // Loads sheets
+  await doc.loadInfo();
 }
 
 // Global variable for the current working sheet
@@ -33,7 +33,7 @@ const setCurrentSheet = (sheetTitle: string) =>
  */
 export async function changeSheet(sheetTitle: string): Promise<string> {
   const sheet = await getSheet(sheetTitle);
-  fs.writeFileSync("./data/currentWorkingSheet.txt", sheetTitle);
+  setCurrentSheet(sheetTitle);
   return "Successfully changed the default sheet";
 }
 
@@ -49,26 +49,6 @@ export async function getSheet(
   const sheet = doc.sheetsByTitle[sheetTitle];
   if (sheet === undefined) throw Error(`Sheet does not exist: ${sheetTitle}`);
   return sheet;
-}
-
-/**
- * Edits the existing user with the new address provided
- * @param param0
- */
-export async function editExistingUser({
-  discord,
-  address,
-}: {
-  discord: string;
-  address: string;
-}) {
-  const currentSheet = getCurrentSheet();
-  const sheet = await getSheet(currentSheet);
-  const rows = await sheet.getRows();
-  const matchIndex = rows.findIndex((row) => row.Discord === discord);
-  rows[matchIndex].Address = address;
-
-  await rows[matchIndex].save();
 }
 
 /**
@@ -145,4 +125,24 @@ export async function userExists(discord: string) {
   const rows = await sheet.getRows();
 
   return rows.some((row) => row.Discord === discord);
+}
+
+/**
+ * Edits the existing user with the new address provided
+ * @param param0
+ */
+export async function editExistingUser({
+  discord,
+  address,
+}: {
+  discord: string;
+  address: string;
+}) {
+  const currentSheet = getCurrentSheet();
+  const sheet = await getSheet(currentSheet);
+  const rows = await sheet.getRows();
+  const matchIndex = rows.findIndex((row) => row.Discord === discord);
+  rows[matchIndex].Address = address;
+
+  await rows[matchIndex].save();
 }
