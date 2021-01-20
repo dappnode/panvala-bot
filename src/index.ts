@@ -1,13 +1,21 @@
 import Discord from "discord.js";
-import { addPanvalaUser, changeSheet, createSheet } from "./google-sheets";
-import { discordToken } from "./params";
+import {
+  addPanvalaUser,
+  changeSheet,
+  createSheet,
+} from "./google-sheets/google-sheets";
+import { discordToken } from "./params/params";
 import cron from "node-cron";
-import { getFile, writeFile } from "./fileCreation";
-import { getGrainEarned, getId } from "./fileParse";
+import { getFile, writeFile } from "./file/fileCreation";
+import { getGrainEarned, getId } from "./file/fileParse";
+import { createPanvalaUser } from "./panvala/panvalaUser";
 
 function main() {
-  const grain = getGrainEarned("swQm7i0bz6wumzAs8ZNteQ");
-  console.log(grain);
+  const user = createPanvalaUser({
+    discord: "emansipater",
+    address: "0XRFETH",
+  });
+  console.log(user);
 }
 main();
 

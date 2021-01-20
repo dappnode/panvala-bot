@@ -3,8 +3,8 @@ import {
   GoogleSpreadsheetWorksheet,
   GoogleSpreadsheetRow,
 } from "google-spreadsheet";
-import { createPanvalaUser } from "./panvalaUser";
-import { clientSecretJson, googleID } from "./params";
+import { createPanvalaUser } from "../panvala/panvalaUser";
+import { clientSecretJson, googleID } from "../params/params";
 
 export const doc = new GoogleSpreadsheet(googleID);
 if (!doc) {

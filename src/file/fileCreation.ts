@@ -3,8 +3,8 @@ import {
   ContentResponse,
   Distribution,
   Receipt,
-} from "./types";
-import { instanceOfDistribution } from "./utils";
+} from "../types/types";
+import { instanceOfDistribution } from "../utils";
 import fs from "fs";
 import { Octokit } from "@octokit/rest";
 
@@ -23,28 +23,6 @@ export function readFile() {
     e.message = `Error when reading data.json: ${e.message}`;
     throw e;
   }
-}
-
-/**
- * Parses the file to obtain distributions
- * @returns array of distributions to calculate total user grain
- */
-export function getReceipts(): Receipt[][] {
-  const file = readFile();
-  const distributions: ActionDistribution[] = file.filter((line) =>
-    instanceOfDistribution(line)
-  );
-  const allocations: Distribution[][] = distributions.map(
-    (distribution) => distribution.action.distribution.allocations
-  );
-
-  const receipts: Receipt[][][] = allocations.map((distributions) =>
-    distributions.map((distribution) => distribution.receipts)
-  );
-
-  const receiptsMerged = ([] as Receipt[][]).concat(...receipts);
-
-  return receiptsMerged;
 }
 
 /**

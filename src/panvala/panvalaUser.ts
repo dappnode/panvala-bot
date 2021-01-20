@@ -1,6 +1,6 @@
-import { getId, getGrainEarned } from "./fileParse";
-import { PanvalaUser } from "./types";
-import { getDate } from "./utils";
+import { getId, getGrainEarned, getLastGrainEarned } from "../file/fileParse";
+import { PanvalaUser } from "../types/types";
+import { getDate } from "../utils";
 
 /**
  * Creates get PanvalaUser features
@@ -19,13 +19,15 @@ export function createPanvalaUser({
   if (id) {
     // User exists
     const time = getDate();
-    const grain = getGrainEarned(id);
+    const grainEarned = getGrainEarned(id);
+    const lastGrainEarned = getLastGrainEarned(id);
+
     return {
       id: id,
       address: address,
       discord: discord,
-      grainEarned: grain,
-      lastGrainEarned: "",
+      grainEarned: grainEarned,
+      lastGrainEarned: lastGrainEarned,
       time: time,
     };
   } else {

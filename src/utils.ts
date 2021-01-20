@@ -1,4 +1,4 @@
-import { ActionAlias, ActionIdentity, ActionDistribution } from "./types";
+import { ActionAlias, ActionIdentity, ActionDistribution } from "./types/types";
 
 export function instanceOfIdentity(
   object: ActionAlias | ActionIdentity | ActionDistribution
