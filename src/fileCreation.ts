@@ -8,6 +8,10 @@ import { instanceOfDistribution } from "./utils";
 import fs from "fs";
 import { Octokit } from "@octokit/rest";
 
+/**
+ * Reads syncrounusly the ledger.json
+ * @returns file in json format
+ */
 export function readFile() {
   try {
     const file = fs.readFileSync("./data/ledger.json", "utf-8");
@@ -21,7 +25,11 @@ export function readFile() {
   }
 }
 
-export function getReceipts() {
+/**
+ * Parses the file to obtain distributions
+ * @returns array of distributions to calculate total user grain
+ */
+export function getReceipts(): Receipt[][] {
   const file = readFile();
   const distributions: ActionDistribution[] = file.filter((line) =>
     instanceOfDistribution(line)
@@ -39,12 +47,20 @@ export function getReceipts() {
   return receiptsMerged;
 }
 
+/**
+ * Writes the file in the same format as in the remote repo
+ * @param file in string format
+ */
 export function writeFile(file: string) {
   const buff = Buffer.from(file, "base64");
   const dataJson = buff.toString("ascii");
   fs.writeFileSync("./data/ledger.json", dataJson);
 }
 
+/**
+ * Get single file ledger.json from repo
+ * Calls writeFIle at the end
+ */
 export async function getFile() {
   const octokit = new Octokit();
   try {

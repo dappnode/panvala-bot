@@ -2,7 +2,16 @@ import Discord from "discord.js";
 import { addPanvalaUser, changeSheet, createSheet } from "./google-sheets";
 import { discordToken } from "./params";
 import cron from "node-cron";
-import { getFile } from "./fileCreation";
+import { getFile, writeFile } from "./fileCreation";
+import { getGrainEarned, getId } from "./fileParse";
+
+function main() {
+  const grain = getGrainEarned("swQm7i0bz6wumzAs8ZNteQ");
+  console.log(grain);
+}
+main();
+
+process.exit();
 
 /**
  * Rewrites the file after the grain distribution

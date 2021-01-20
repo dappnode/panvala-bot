@@ -7,7 +7,8 @@ import {
 export interface PanvalaUser {
   discord: string;
   id: string;
-  grain: string;
+  grainEarned: string;
+  lastGrainEarned: string;
   address: string;
   time: string;
 }

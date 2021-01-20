@@ -10,13 +10,18 @@ export const doc = new GoogleSpreadsheet(googleID);
 if (!doc) {
   throw Error("the doc must exists");
 }
-
+/**
+ * Load necessary information to interact with sheets
+ */
 export async function loadSheets() {
   await doc.useServiceAccountAuth(clientSecretJson);
   await doc.loadInfo(); // Loads sheets
 }
 
+// Global variable for the current working sheet
+// DO NOT USE GLOBAL VARIABLES as 'database'. Do txt file.
 let SHEET_TITLE = "February";
+
 /**
  * Sets the global variable with the sheet (if exists)
  * @param sheetTitle
@@ -61,7 +66,7 @@ export async function addPanvalaUser({
       await sheet.addRow({
         Discord: panvalaUser.discord,
         Id: panvalaUser.id,
-        Grain: panvalaUser.grain,
+        GrainEarned: panvalaUser.grainEarned,
         Address: panvalaUser.address,
         Date: panvalaUser.time,
       });
@@ -85,7 +90,14 @@ export async function createSheet(title: string): Promise<string> {
   try {
     await loadSheets();
     await doc.addSheet({
-      headerValues: ["Discord", "Id", "Address", "Date", "Grain"],
+      headerValues: [
+        "Discord",
+        "Id",
+        "Address",
+        "Date",
+        "GrainEarned",
+        "LastGrainEarned",
+      ],
       title: title,
     });
     SHEET_TITLE = title;

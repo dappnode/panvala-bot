@@ -1,7 +1,12 @@
-import { getId, getGrain } from "./fileParse";
+import { getId, getGrainEarned } from "./fileParse";
 import { PanvalaUser } from "./types";
 import { getDate } from "./utils";
 
+/**
+ * Creates get PanvalaUser features
+ * @param param0
+ * @returns PanvalaUser {id, address, discord, grain, time} | user not found
+ */
 export function createPanvalaUser({
   discord,
   address,
@@ -14,12 +19,13 @@ export function createPanvalaUser({
   if (id) {
     // User exists
     const time = getDate();
-    const grain = getGrain(id);
+    const grain = getGrainEarned(id);
     return {
       id: id,
       address: address,
       discord: discord,
-      grain: grain,
+      grainEarned: grain,
+      lastGrainEarned: "",
       time: time,
     };
   } else {
@@ -27,5 +33,3 @@ export function createPanvalaUser({
     throw Error("User was not found");
   }
 }
-
-export function checkUserExists() {}
