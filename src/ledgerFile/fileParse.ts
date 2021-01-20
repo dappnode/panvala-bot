@@ -26,6 +26,12 @@ export function getGrainEarned(id: string): string {
   return totalUserGrain.toString();
 }
 
+/**
+ * Parse the ledger.json to obtain the last grain distribution
+ * of a specific user
+ * @param id
+ * @returns grain earned in the last distribution
+ */
 export function getLastGrainEarned(id: string): string {
   const distributionsMerged: Receipt[] = getReceipts(id);
   // Each distribution contains two Receipts (not sure)

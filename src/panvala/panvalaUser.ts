@@ -1,4 +1,8 @@
-import { getId, getGrainEarned, getLastGrainEarned } from "../file/fileParse";
+import {
+  getId,
+  getGrainEarned,
+  getLastGrainEarned,
+} from "../ledgerFile/fileParse";
 import { PanvalaUser } from "../types/types";
 import { getDate } from "../utils";
 
